@@ -18,13 +18,14 @@ insert into agencia values (
 
 insert into conta_corrente values (
 
-123,
-2021,
 123456789,
+50.0,
 1,
-50.0
+1
+
 );
 
+/*
 insert into extrato values (
   
 1,
