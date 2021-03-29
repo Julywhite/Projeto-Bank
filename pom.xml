@@ -8,16 +8,14 @@
 		<version>2.3.0.M1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.javatpoint</groupId>
-	<artifactId>com.accenture.academico</artifactId>
+	<groupId>com.accenture</groupId>
+	<artifactId>academico</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>com.accenture.academico</name>
 	<description>Demo project for Spring Boot</description>
-
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -48,7 +46,6 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -57,7 +54,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<repositories>
 		<repository>
 			<id>spring-milestones</id>
@@ -72,5 +68,4 @@
 			<url>https://repo.spring.io/milestone</url>
 		</pluginRepository>
 	</pluginRepositories>
-
 </project>

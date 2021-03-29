@@ -1,37 +1,50 @@
 package com.accenture.academico.model;
 
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table
 public class ContaCorrente {
 
 	@Id
-	@GeneratedValue(generator="seq_contacorrente_id",strategy= GenerationType.SEQUENCE)
+	@GeneratedValue(generator = "seq_contacorrente_id", strategy = GenerationType.SEQUENCE)
 	private int id;
 
 	@Column
 	@NotBlank
 	private String numero;
-	
+
 	@Column
-	@NotBlank
-	private String saldo;
-	
-	@OneToOne
+	@NotNull
+	private Double saldo;
+
+	@ManyToOne
+	@JoinColumn(name = "id_agencia")
 	private Agencia agencia;
-	
-	@OneToOne
+
+	@ManyToOne
+	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
-	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public int getIdContaCorrente() {
 		return id;
@@ -49,20 +62,12 @@ public class ContaCorrente {
 		this.numero = numero;
 	}
 
-	public String getSaldo() {
+	public Double getSaldo() {
 		return saldo;
 	}
 
-	public void setSaldo(String saldo) {
+	public void setSaldo(Double saldo) {
 		this.saldo = saldo;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public Agencia getAgencia() {
@@ -80,9 +85,21 @@ public class ContaCorrente {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-
-
-
-
+	
+	public int getIdAgencia() {
+		return this.agencia.getId();
+	}
+	
+	public void setIdAgencia(int idAgencia) {
+		this.agencia.setId(idAgencia);
+	}
+	
+	public int getIdCliente() {
+		return this.cliente.getId();
+	}
+	
+	public void setIdCliente(int idCliente) {
+		this.cliente.setId(idCliente);
+	}
 
 }

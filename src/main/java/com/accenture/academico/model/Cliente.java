@@ -20,15 +20,10 @@ public class Cliente
 	private String nome;
 
 	@Column
-	private Long cpf;
+	private String cpf;
 
 	@Column
-	private Long fone;
-	
-//	@OneToMany
-//	@JoinColumn(name = "idCliente")
-//	private List<ContaCorrente> contasCliente;
-	
+	private String fone;
 	
 	public int getId() {
 		return id;
@@ -44,24 +39,18 @@ public class Cliente
 		this.nome = nome;
 	}
 	
-	public Long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
-	public void setCpf(Long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 	
-	public Long getFone() {
+	public String getFone() {
 		return fone;
 	}
-	public void setFone(Long fone) {
+	public void setFone(String fone) {
 		this.fone = fone;
 	}
-//	public List<ContaCorrente> getContasCliente() {
-//		return contasCliente;
-//	}
-//	public void setContas(List<ContaCorrente> contasCliente) {
-//		this.contasCliente = contasCliente;
-//	}
 	
 }

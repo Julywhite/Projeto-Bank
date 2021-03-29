@@ -7,25 +7,21 @@ import org.springframework.stereotype.Service;
 import com.accenture.academico.model.ContaCorrente;
 import com.accenture.academico.repository.ContaCorrenteRepository;
 
-
 @Service
-public class ContaCorrenteService 
-{
+public class ContaCorrenteService {
 	@Autowired
 	ContaCorrenteRepository contaCorrenteRepository;
 
-	public List<ContaCorrente> getAllContaCorrente() 
-	{
-		List<ContaCorrente> contaCorrente = new ArrayList<ContaCorrente>();
-		contaCorrenteRepository.findAll().forEach(ContaC -> contaCorrente.add(ContaC));
+	public List<ContaCorrente> getAllContaCorrente() {
+		List<ContaCorrente> contaCorrente = new ArrayList<>();
+		contaCorrenteRepository.findAll().forEach(conta -> contaCorrente.add(conta));
 		return contaCorrente;
 	}
-
 
 	public ContaCorrente getContaCorrenteById(int id) {
 		return contaCorrenteRepository.findById(id).get();
 	}
-	
+
 	public void saveOrUpdate(ContaCorrente ContaCorrente) {
 		contaCorrenteRepository.save(ContaCorrente);
 	}
@@ -33,6 +29,5 @@ public class ContaCorrenteService
 	public void delete(int id) {
 		contaCorrenteRepository.deleteById(id);
 	}
-
 
 }

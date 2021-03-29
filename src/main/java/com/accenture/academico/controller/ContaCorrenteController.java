@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.accenture.academico.model.Agencia;
+import com.accenture.academico.exceptions.InsufficientFundsException;
 import com.accenture.academico.model.ContaCorrente;
 import com.accenture.academico.model.Extrato;
-import com.accenture.academico.repository.AgenciaRepository;
 import com.accenture.academico.service.ContaCorrenteService;
 import com.accenture.academico.service.ExtratoService;
 
@@ -24,8 +23,9 @@ public class ContaCorrenteController {
 
 	@Autowired
 	ContaCorrenteService contaCorrenteService;
-	AgenciaRepository agenciaService;
-	ExtratoService extratoService = new ExtratoService();
+	
+	@Autowired
+	ExtratoService extratoService;
 	 
 	@GetMapping("/contaCorrente")
 	private List<ContaCorrente> getAllContaCorrente() {
@@ -49,27 +49,46 @@ public class ContaCorrenteController {
 	}
 	
 	@PostMapping("/contaCorrente/{id}/saque/{valor}")
-	private void sacar(@PathVariable("id") int id, @PathVariable("valor") String valorSaque) {
-		Double valorConta = Double.parseDouble(contaCorrenteService.getContaCorrenteById(id).getSaldo());
-		Double valor = Double.parseDouble(valorSaque);
+	private void sacar(@PathVariable("id") int id, @PathVariable("valor") Double valorSaque) {
+		ContaCorrente conta = contaCorrenteService.getContaCorrenteById(id);
+		Double valorConta = conta.getSaldo();
 		
-		if (valor <= valorConta) {
+		if (valorSaque <= valorConta) {
 			
-			valorConta = valorConta - valor;
-			
-			ContaCorrente conta = contaCorrenteService.getContaCorrenteById(id);
-			conta.setSaldo(valorConta.toString());
+			conta.setSaldo(valorConta - valorSaque);
 			
 			Extrato extrato = new Extrato();
 			LocalDateTime dataHora = LocalDateTime.now();
 			
 			extrato.setDataHoraMovimento(dataHora);
-			extrato.setOperacao(1);
+			extrato.setOperacao(Extrato.SAQUE);
 			extrato.setContaCorrente(conta);
+			extrato.setValor(valorSaque);
 
 			extratoService.saveOrUpdate(extrato);
 			contaCorrenteService.saveOrUpdate(conta);
+		}else {
+			throw new InsufficientFundsException("Não foi possível sacar. Fundos insuficientes.");
 		}
+	}
+	
+	@PostMapping("/contaCorrente/{id}/deposito/{valor}")
+	private void depositar(@PathVariable("id") int id, @PathVariable("valor") Double valorDeposito) {
+		ContaCorrente conta = contaCorrenteService.getContaCorrenteById(id);
+		Double valorConta = conta.getSaldo();
+		
+		conta.setSaldo(valorConta + valorDeposito);
+		
+		Extrato extrato = new Extrato();
+		LocalDateTime dataHora = LocalDateTime.now();
+		
+		extrato.setDataHoraMovimento(dataHora);
+		extrato.setOperacao(Extrato.DEPOSITO);
+		extrato.setContaCorrente(conta);
+		extrato.setValor(valorDeposito);
+
+		extratoService.saveOrUpdate(extrato);
+		contaCorrenteService.saveOrUpdate(conta);
 	}
 }
 
