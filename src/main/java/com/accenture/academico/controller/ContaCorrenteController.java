@@ -50,23 +50,12 @@ public class ContaCorrenteController {
 	
 	@PostMapping("/contaCorrente/{id}/deposito/{valor}")
 	private void depositar(@PathVariable("id") int id, @PathVariable("valor") Double valorDeposito) {
-//		ContaCorrente conta = contaCorrenteService.getContaCorrenteById(id);
-//		Double valorConta = conta.getSaldo();
-//		
-//		conta.setSaldo(valorConta + valorDeposito);
-//		
-//		Extrato extrato = new Extrato();
-//		LocalDateTime dataHora = LocalDateTime.now();
-//		
-//		extrato.setDataHoraMovimento(dataHora);
-//		extrato.setOperacao(Extrato.DEPOSITO);
-//		extrato.setContaCorrente(conta);
-//		extrato.setValor(valorDeposito);
-//
-//		extratoService.saveOrUpdate(extrato);
-//		contaCorrenteService.saveOrUpdate(conta);
-		
 		contaCorrenteService.depositar(id, valorDeposito);
+	}
+	
+	@PostMapping("/contaCorrente/{id}/transferencia/{valor}/{id2}")
+	private void transferir(@PathVariable("id") int id, @PathVariable("valor") Double valorTransferencia, @PathVariable("id2") int id2) {
+		contaCorrenteService.transferir(id, valorTransferencia, id2);
 	}
 }
 

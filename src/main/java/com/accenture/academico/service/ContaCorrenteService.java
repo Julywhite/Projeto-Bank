@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.accenture.academico.exceptions.InsufficientFundsException;
 import com.accenture.academico.exceptions.InvalidDepositeValueException;
+import com.accenture.academico.exceptions.InvalidOperationException;
 import com.accenture.academico.model.ContaCorrente;
 import com.accenture.academico.model.Extrato;
 import com.accenture.academico.repository.ContaCorrenteRepository;
@@ -81,6 +82,42 @@ public class ContaCorrenteService {
 			
 		}else {
 			throw new InvalidDepositeValueException("Não foi possível depositar. Valor inválido.");
+		}
+	}
+	
+	public void transferir(int id, Double valorTransferencia, int id2) {
+		ContaCorrente contaDoadora = getContaCorrenteById(id);
+		ContaCorrente contaRecebedora = getContaCorrenteById(id2);
+		Double valorContaD = contaDoadora.getSaldo();
+		Double valorContaR = contaRecebedora.getSaldo();
+		
+		if (valorTransferencia <= valorContaD) {
+			
+			contaDoadora.setSaldo(valorContaD - valorTransferencia);
+			contaRecebedora.setSaldo(valorContaR + valorTransferencia);
+			
+			Extrato extrato1 = new Extrato();
+			
+			extrato1.setDataHoraMovimento(LocalDateTime.now());
+			extrato1.setOperacao(Extrato.TRANSF_DEBITO);
+			extrato1.setContaCorrente(contaDoadora);
+			extrato1.setValor(valorTransferencia);
+			
+			extratoService.saveOrUpdate(extrato1);
+			saveOrUpdate(contaDoadora);
+			
+			Extrato extrato2 = new Extrato();
+			
+			extrato2.setDataHoraMovimento(LocalDateTime.now());
+			extrato2.setOperacao(Extrato.TRANSF_CREDITO);
+			extrato2.setContaCorrente(contaRecebedora);
+			extrato2.setValor(valorTransferencia);
+			
+			extratoService.saveOrUpdate(extrato2);
+			saveOrUpdate(contaRecebedora);
+			
+		}else {
+			throw new InvalidOperationException("Não foi possível realizar Transferência. Operação inválida.");
 		}
 	}
 
