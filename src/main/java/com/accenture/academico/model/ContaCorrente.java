@@ -82,19 +82,19 @@ public class ContaCorrente {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	
+
 	public int getIdAgencia() {
 		return this.agencia.getId();
 	}
-	
+
 	public void setIdAgencia(int idAgencia) {
 		this.agencia.setId(idAgencia);
 	}
-	
+
 	public int getIdCliente() {
 		return this.cliente.getId();
 	}
-	
+
 	public void setIdCliente(int idCliente) {
 		this.cliente.setId(idCliente);
 	}

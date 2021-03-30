@@ -12,33 +12,31 @@ import org.springframework.web.bind.annotation.RestController;
 import com.accenture.academico.model.Cliente;
 import com.accenture.academico.service.ClienteService;
 
-
 @RestController
 public class ClienteController {
 
 	@Autowired
 	ClienteService clienteService;
-	 
+
 	@GetMapping("/cliente")
-	private List<Cliente> getAllCliente() {
+	public List<Cliente> getAllCliente() {
 		return clienteService.getAllCliente();
 	}
-	
+
 	@GetMapping("/cliente/{id}")
-	private Cliente getCliente(@PathVariable("id") int id) {
+	public Cliente getCliente(@PathVariable("id") int id) {
 		return clienteService.getClienteById(id);
 	}
-	
+
 	@DeleteMapping("/cliente/{id}")
-	private void deleteCliente(@PathVariable("id") int id) {
+	public void deleteCliente(@PathVariable("id") int id) {
 		clienteService.delete(id);
 	}
-	
+
 	@PostMapping("/cliente")
-	private int saveCliente(@RequestBody Cliente cliente) {
+	public int saveCliente(@RequestBody Cliente cliente) {
 		clienteService.saveOrUpdate(cliente);
 		return cliente.getId();
 	}
-	
-}
 
+}

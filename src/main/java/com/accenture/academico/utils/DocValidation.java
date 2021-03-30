@@ -9,7 +9,7 @@ public class DocValidation {
 
     public static boolean checkCPF(Cliente cliente){
 
-        final String CPF = cliente.getCpf();
+        final String CPF = cliente.getCpf().replaceAll("[^0-9]", "");
 
         if (CPF.equals("00000000000") ||
                 CPF.equals("11111111111") ||

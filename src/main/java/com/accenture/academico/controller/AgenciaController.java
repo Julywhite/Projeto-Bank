@@ -12,32 +12,30 @@ import org.springframework.web.bind.annotation.RestController;
 import com.accenture.academico.model.Agencia;
 import com.accenture.academico.service.AgenciaService;
 
-
 @RestController
 public class AgenciaController {
 
 	@Autowired
 	AgenciaService agenciaService;
-	 
+
 	@GetMapping("/agencia")
-	private List<Agencia> getAllAgencia() {
+	public List<Agencia> getAllAgencia() {
 		return agenciaService.getAllAgencia();
 	}
-	
+
 	@GetMapping("/agencia/{id}")
-	private Agencia getAgencia(@PathVariable("id") int id) {
+	public Agencia getAgencia(@PathVariable("id") int id) {
 		return agenciaService.getAgenciaById(id);
 	}
-	
+
 	@DeleteMapping("/agencia/{id}")
-	private void deleteAgencia(@PathVariable("id") int id) {
+	public void deleteAgencia(@PathVariable("id") int id) {
 		agenciaService.delete(id);
 	}
-	
+
 	@PostMapping("/agencia")
-	private int saveAgencia(@RequestBody Agencia agencia) {
+	public int saveAgencia(@RequestBody Agencia agencia) {
 		agenciaService.saveOrUpdate(agencia);
 		return agencia.getId();
 	}
 }
-

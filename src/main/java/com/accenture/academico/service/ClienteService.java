@@ -10,25 +10,21 @@ import org.springframework.stereotype.Service;
 import com.accenture.academico.model.Cliente;
 import com.accenture.academico.repository.ClienteRepository;
 
-
 @Service
-public class ClienteService 
-{
+public class ClienteService {
 	@Autowired
 	ClienteRepository clienteRepository;
 
-	public List<Cliente> getAllCliente() 
-	{
+	public List<Cliente> getAllCliente() {
 		List<Cliente> clients = new ArrayList<Cliente>();
 		clienteRepository.findAll().forEach(cliente -> clients.add(cliente));
 		return clients;
 	}
 
-
 	public Cliente getClienteById(int id) {
 		return clienteRepository.findById(id).get();
 	}
-	
+
 	public void saveOrUpdate(Cliente cliente) {
 
 		DocValidation.checkCPF(cliente);

@@ -39,7 +39,7 @@ public class Extrato {
 	@Column
 	@NotNull
 	private int operacao;
-	
+
 	@Column
 	@NotNull
 	private Double valor;
@@ -87,11 +87,11 @@ public class Extrato {
 	public void setContaCorrente(ContaCorrente contaCorrente) {
 		this.contaCorrente = contaCorrente;
 	}
-	
+
 	public int getIdContaCorrente() {
 		return this.contaCorrente.getId();
 	}
-	
+
 	public void setIdContaCorrente(int idContaCorrente) {
 		this.contaCorrente.setId(idContaCorrente);
 	}

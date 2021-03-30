@@ -11,28 +11,26 @@ import org.springframework.web.bind.annotation.RestController;
 import com.accenture.academico.model.Extrato;
 import com.accenture.academico.service.ExtratoService;
 
-
 @RestController
 public class ExtratoController {
 
 	@Autowired
 	ExtratoService extratoService;
-	 
+
 	@GetMapping("/extrato")
-	private List<Extrato> getAllExtrato() {
+	public List<Extrato> getAllExtrato() {
 		return extratoService.getAllExtrato();
 	}
-	
+
 	@GetMapping("/extrato/{id}")
-	private Extrato getExtrato(@PathVariable("id") int id) {
+	public Extrato getExtrato(@PathVariable("id") int id) {
 		return extratoService.getExtratoById(id);
 	}
-	
+
 	@PostMapping("/extrato")
-	private int saveExtrato(@RequestBody Extrato extrato) {
+	public int saveExtrato(@RequestBody Extrato extrato) {
 		extratoService.saveOrUpdate(extrato);
 		return extrato.getId();
 	}
 
 }
-
