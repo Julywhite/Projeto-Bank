@@ -2,6 +2,8 @@ package com.accenture.academico.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.accenture.academico.utils.DocValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,8 @@ public class ClienteService
 	}
 	
 	public void saveOrUpdate(Cliente cliente) {
+
+		DocValidation.checkCPF(cliente);
 		clienteRepository.save(cliente);
 	}
 
